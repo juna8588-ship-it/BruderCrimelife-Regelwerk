@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Regelwerk | Bruda Crimelife</title>
+    <style>
+        /* --- ALLGEMEINE STYLES (CLEAN) --- */
+        :root {
+            --bg-color: #0a0a0a; /* Sehr dunkles Grau, fast Schwarz */
+            --container-bg: #141414; /* Leicht helleres Grau für den Inhalt */
+            --text-main: #e0e0e0; /* Off-White für bessere Lesbarkeit */
+            --text-muted: #a0a0a0; /* Grau für Sekundärinfos */
+            --accent: #ff3e3e; /* Ein aggressives Rot für Akzente (Crimelife) */
+            --border-color: #2a2a2a;
+            
+            /* Team Farben laut Vorlage */
+            --rank-supporter: #2ecc71; /* Grün */
+            --rank-moderator: #3498db; /* Blau */
+            --rank-admin: #e67e22;    /* Orange */
+            --rank-manager: #e74c3c;  /* Rot */
+            --rank-leitung: #9b59b6;  /* Lila */
+            --rank-high: #e74c3c;     /* High-Team oft Rot */
+
+            --shadow: 0 4px 6px rgba(0,0,0,0.3);
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* --- LAYOUT CONTAINER --- */
+        .main-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background-color: var(--container-bg);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 30px;
+            margin-bottom: 30px;
+        }
+
+        .server-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .server-logo span {
+            color: var(--accent);
+        }
+
+        .page-title {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav.table-of-contents {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        nav.table-of-contents a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.05);
+            transition: all 0.2s ease;
+        }
+
+        nav.table-of-contents a:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* --- WICHTIGER HINWEIS (OBEN) --- */
+        .top-warning {
+            background-color: rgba(255, 62, 62, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .top-warning h2 {
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .top-warning p {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .sanktionen-flash {
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 1.1em;
+            text-transform: uppercase;
+        }
+
+        /* --- REGEL SEKTIONEN --- */
+        section {
+            margin-bottom: 50px;
+            scroll-margin-top: 20px; /* Für weiches Scrollen zu Ankern */
+        }
+
+        h2.section-header {
+            font-size: 2rem;
+            color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- REGEL BLÖCKE --- */
+        .rule-card {
+            background-color: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: border-color 0.2s ease;
+        }
+
+        .rule-card:hover {
+            border-color: #444;
+        }
+
+        .rule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .rule-number {
+            font-weight: 800;
+            color: var(--accent);
+            font-size: 1.1rem;
+            background: rgba(255, 62, 62, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .rule-content {
+            color: var(--text-main);
+        }
+
+        /* Unterpunkte / Beispiele / Info-Boxen */
+        .sub-point, .example-box, .info-box {
+            margin-top: 10px;
+            padding-left: 15px;
+            border-left: 2px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .info-box {
+            border-left-color: var(--rank-moderator);
+            background-color: rgba(52, 152, 219, 0.05);
+            padding: 10px 15px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .example-box {
+            font-family: 'Courier New', Courier, monospace; /* Monospace für Nicknames */
+            color: #ccc;
+        }
+
+        .info-icon {
+            color: #f1c40f; /* Gold/Gelb für Sterne/Wichtig */
+            margin-right: 5px;
+        }
+
+        .arrow {
+            color: var(--accent);
+            margin-right: 5px;
+        }
+
+        /* --- RANG FARBEN (BADGES) --- */
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        .bg-supporter { background-color: var(--rank-supporter); }
+        .bg-moderator { background-color: var(--rank-moderator); }
+        .bg-admin { background-color: var(--rank-admin); }
+        .bg-manager { background-color: var(--rank-manager); }
+        .bg-leitung { background-color: var(--rank-leitung); }
+        .bg-high { background-color: var(--rank-high); }
+
+        /* --- FOOTER & SIGNATUR --- */
+        footer {
+            margin-top: 60px;
+            border-top: 2px solid var(--border-color);
+            padding-top: 30px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .final-warning {
+            background-color: #2a1a00; /* Sehr dunkles Orange */
+            border: 1px solid #e67e22;
+            color: #e67e22;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .signature {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-top: 20px;
+        }
+
+        .signature span {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 20px;
+                margin: 10px;
+            }
+            .server-logo {
+                font-size: 1.8rem;
+            }
+            nav.table-of-contents {
+                flex-direction: column;
+                gap: 10px;
+            }
+            h2.section-header {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <header>
+            <div class="server-logo">Bruda <span>Crimelife</span></div>
+            <div class="page-title">Team Regelwerk</div>
+            
+            <nav class="table-of-contents">
+                <a href="#allgemeines">1. Allgemeines</a>
+                <a href="#support">2. Support</a>
+            </nav>
+        </header>
+
+        <div class="top-warning">
+            <h2>Wichtiger Hinweis</h2>
+            <p>Dem Team Regelwerk ist Folge zu <span style="text-transform: uppercase; text-decoration: underline;">leisten</span>.</p>
+            <p>Wird dies nicht getan, werden dementsprechende <span class="sanktionen-flash">Sanktionen folgen!</span></p>
+        </div>
+
+        <section id="allgemeines">
+            <h2 class="section-header"><span>1.</span> Allgemeines</h2>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.1</span></div>
+                <div class="rule-content">
+                    Innerhalb des Teams ist ein freundlicher und respektvoller Umgang wichtig – lästern wird nicht geduldet.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.2</span></div>
+                <div class="rule-content">
+                    Das Nachfragen nach einer Beförderung ist nicht gestattet und wird stark sanktioniert.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.3</span></div>
+                <div class="rule-content">
+                    Das Abmelden bei Abwesenheit von über 2 Tagen ist Pflicht.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.4</span></div>
+                <div class="rule-content">
+                    Eine Aktivität von min. 1 Std. am Tag in seiner Zuständigkeit ist erwünscht.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.5</span></div>
+                <div class="rule-content">
+                    Ihr seid dazu aufgerufen direkt zu handeln, solange ein eindeutiger Clip vorhanden ist.<br>
+                    <strong>Eigensupport gibt es nicht!</strong>
+                    <div class="info-box">
+                        <span class="info-icon">⭐</span><strong>Wichtig:</strong> Ihr seid Vorbilder, also verhaltet euch regeltechnisch richtig.
+                    </div>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.6</span></div>
+                <div class="rule-content">
+                    Streitigkeiten sollten selbst geklärt werden.
+                    <div class="sub-point"><span class="arrow">➜</span> Funktioniert dies nicht, so ist die Teamleitung zu kontaktieren.</div>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.7</span></div>
+                <div class="rule-content">
+                    Der Steam / FiveM- und Discord-Nickname-Profilbilder müssen bei Eintritt in unser Team geändert werden.<br>
+                    IC ist nur der Name nötig, damit Modder nicht direkt erkennen, wer zum Team gehört.
+                    <div class="example-box">
+                        Bsp.:<br>
+                        🟦 D: B | Sensei<br>
+                        🟦 S / FiveM: B | Sensei
+                    </div>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.8</span></div>
+                <div class="rule-content">
+                    Die Ränge Supporter <span class="badge bg-supporter">Grün</span> und Moderator <span class="badge bg-moderator">Blau</span> dürfen nur von der Teamleitung <span class="badge bg-leitung">Lila</span> und höher vergeben werden.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.9</span></div>
+                <div class="rule-content">
+                    Die Ränge ab Administrator <span class="badge bg-admin">Orange</span> dürfen nur von den Managern <span class="badge bg-manager">Rot</span> in Absprache mit der Projektleitung <span class="badge bg-leitung">Lila</span> vergeben werden.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.10</span></div>
+                <div class="rule-content">
+                    Das Aussprechen von einem Community-Ausschluss ist erst ab dem Rang Team-Leitung <span class="badge bg-manager">Rot</span> genehmigt und muss einen nachweisbaren guten Grund haben.
+                    <div class="sub-point"><span class="arrow">➜</span> Community-Ausschluss = Permanenter Bann auf allen Plattformen von Bruda Crimelife</div>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.11</span></div>
+                <div class="rule-content">
+                    Bei Teambesprechungen besteht eine Anwesenheitspflicht, sofern man nicht abgemeldet ist.
+                    <div class="sub-point"><span class="arrow">➜</span> Sollte es häufiger zu Abwesenheiten ohne Abmeldung kommen, führt dies zum Rauswurf.</div>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.12</span></div>
+                <div class="rule-content">
+                    Teambesprechungen können nur von dem Highteam <span class="badge bg-high">Rot</span> oder der Projektleitung <span class="badge bg-high">Rot</span> einberufen werden.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.13</span></div>
+                <div class="rule-content">
+                    Das Leaken von teaminternen Angelegenheiten führt zu einem Teamkick. Hierbei spielt es keine Rolle, ob es ein internes Voting, der Teamchat oder die Logs sind.
+                    <div class="info-box">
+                        <span class="info-icon">⭐</span><strong>Zusatz:</strong> Alles, was nicht für normale User zugänglich ist, ist automatisch teamintern.
+                    </div>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.14</span></div>
+                <div class="rule-content">
+                    Das Verbreiten von falschen Informationen führt zu Sanktionen.
+                    <div class="example-box">
+                        Bsp.:<br>
+                        „Mit einem Teamwarn kann man keinen Uprank bekommen“<br>
+                        „Man muss ab Moderator nur noch Rückerstattungen machen, kein normalen Support“
+                    </div>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.15</span></div>
+                <div class="rule-content">
+                    Abmeldungen (verhäuft) schützen nicht vor Deranks.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.16</span></div>
+                <div class="rule-content">
+                    Das Ändern des Namens anderer Teamler ist untersagt und wird sanktioniert.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.17</span></div>
+                <div class="rule-content">
+                    Nametags MÜSSEN beim normalen Spielen ausgeschaltet werden. Sprich: Nametags aus, solange Events oder normale Fights sind.<br>
+                    Da gelten dann auch keine Ausreden wie „Ich hatte keine Zeit“ oder „Ich habe es nicht bemerkt“.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§1.18</span></div>
+                <div class="rule-content">
+                    Teamler dürfen sich nicht TP’en oder den God-Mode (während eines GW’s) benutzen.<br>
+                    Wer dies dennoch benutzt, muss mit einem Team-Ausschluss rechnen!
+                </div>
+            </div>
+        </section>
+
+        <section id="support">
+            <h2 class="section-header"><span>2.</span> Support</h2>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§2.1</span></div>
+                <div class="rule-content">
+                    Das Nutzen der administrativen Rechte sind nur für Supportfälle oder Events gestattet.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§2.2</span></div>
+                <div class="rule-content">
+                    Das Verhalten im Support muss stets freundlich und respektvol sein.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§2.3</span></div>
+                <div class="rule-content">
+                    Ein Supportfall muss unparteiisch geleitet werden. Zudem hat jede Partei, die im Fall verwickelt ist, ein Rederecht.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§2.5</span></div>
+                <div class="rule-content">
+                    Ein Supportfall darf max. von zwei Supportern <span class="badge bg-supporter">Grün</span> / Moderatoren <span class="badge bg-moderator">Blau</span> und einem zusätzlichen High-Teamler <span class="badge bg-high">Rot</span> geführt werden.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§2.6</span></div>
+                <div class="rule-content">
+                    Verwarnungen, Banns und Supports müssen immer im entsprechenden Discord-Channel <span class="badge bg-moderator">Blau</span> eingetragen werden.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§2.8</span></div>
+                <div class="rule-content">
+                    Ein Bann darf nur von der Person, welche den Bann ausgesprochen hat, oder dem High-Team <span class="badge bg-high">Rot</span> revoked werden.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§2.9</span></div>
+                <div class="rule-content">
+                    Das Betreten eines Support-Bereiches ohne Hintergrund für den aktuellen Supportfall ist untersagt.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§2.10</span></div>
+                <div class="rule-content">
+                    Das Verschieben von Benutzern und Teamlern aus aktiven Supportfällen ist nur dem High-Team <span class="badge bg-high">Rot</span> gestattet.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§2.11</span></div>
+                <div class="rule-content">
+                    Das Verlassen eines Support-Raumes ist nur gestattet, wenn der Benutzer trotzdem in Beaufsichtigung eines Teammitgliedes ist.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§2.12</span></div>
+                <div class="rule-content">
+                    Ein IC-Supportfall darf erst ab dem Rang Supporter <span class="badge bg-supporter">Grün</span> eröffnet werden.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§2.13</span></div>
+                <div class="rule-content">
+                    Ein IC-Supportfall sollte nach Möglichkeit in den Discord <span class="badge bg-moderator">Blau</span> verlegt werden.
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-header"><span class="rule-number">§2.14</span></div>
+                <div class="rule-content">
+                    Eine Sanktion muss stets gerechtfertigt sein. Banns dürfen nicht willkürlich ausgesprochen werden.
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="final-warning">
+                WICHTIG ❗: Hier können immer wieder Änderungen vorkommen. Jeder Teamler muss sich darum kümmern, dass er sich die Informationen selber abholt.
+            </div>
+            <div class="signature">MFG <span>SCHERO</span></div>
+        </footer>
+    </div>
+
+</body>
+</html>
